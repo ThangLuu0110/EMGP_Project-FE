@@ -1,0 +1,8 @@
+// EMGP global styles — single entry point
+// Import once in src/index.js
+
+@use "base";
+@use "layout";
+@use "components";
+@use "pages";
+@use "vendors";
