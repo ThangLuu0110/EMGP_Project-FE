@@ -11,9 +11,10 @@
 
 .sidebar__title {
   margin: 0 $spacing-md $spacing-lg;
-  font-size: 1.125rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .sidebar__list {
@@ -31,6 +32,14 @@
   font-size: 0.95rem;
   border-left: 3px solid transparent;
   @include link-transition;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  .sidebar__link-logo{
+    font-size: 1.7rem;
+    margin-right: 10px;
+  }
 
   &:hover {
     background-color: $color-surface-hover;
@@ -43,4 +52,6 @@
     border-left-color: $color-primary;
     font-weight: 500;
   }
+
+
 }
