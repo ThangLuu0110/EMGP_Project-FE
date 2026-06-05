@@ -1,0 +1,160 @@
+@use "../abstracts" as *;
+
+.employees-list {
+  color: $color-text;
+
+  &__header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    &-title {
+      color: $color-surface;
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+
+    &-button {
+      padding: $spacing-sm $spacing-md;
+      font-size: 0.9rem;
+      font-family: inherit;
+      font-weight: 500;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      color: $color-text;
+      background-color: $color-create-button;
+    }
+  }
+}
+
+.employees-search {
+  max-width: 100%;
+  padding: $spacing-lg;
+  background-color: $color-surface;
+  border-radius: 8px;
+
+  &__fields {
+    display: grid;
+    gap: $spacing-md;
+
+    &.row-one{
+      @include respond-to(md) {
+        grid-template-columns: 3fr 1fr;
+      }
+    }
+
+    &.row-two{
+      margin-top: 1rem;
+      @include respond-to(md) {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+    }
+  }
+
+  &__field {
+    @include flex-column($spacing-xs);
+  }
+
+  &__label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: $color-text-muted;
+  }
+
+  &__input {
+    padding: $spacing-sm;
+    font-size: 0.95rem;
+    font-family: inherit;
+    color: $color-text;
+    background-color: #172033;
+    border: 1px solid $color-surface-hover;
+    border-radius: 6px;
+    outline: none;
+    @include link-transition;
+
+    &::placeholder {
+      color: $color-text-muted;
+      opacity: 0.7;
+    }
+
+    &:focus {
+      border-color: $color-primary;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-sm;
+    margin-top: $spacing-lg;
+  }
+
+  &__button {
+    padding: $spacing-sm $spacing-md;
+    font-size: 0.9rem;
+    font-family: inherit;
+    font-weight: 500;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    @include link-transition;
+
+    &--primary {
+      color: #0f172a;
+      background-color: $color-primary;
+
+      &:hover {
+        filter: brightness(1.08);
+      }
+    }
+
+    &--secondary {
+      color: $color-text;
+      background-color: $color-surface-hover;
+
+      &:hover {
+        filter: brightness(1.1);
+      }
+    }
+  }
+}
+
+.employees-table {
+  margin-top: $spacing-lg;
+  background-color: $color-surface;
+  border-radius: 8px;
+  padding: $spacing-lg;
+  overflow-x: auto;
+}
+
+.employees-table__table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.employees-table__row--header .employees-table__th {
+  border-bottom: 1px solid $color-surface-hover;
+}
+
+.employees-table__th {
+  padding: $spacing-sm;
+  text-align: left;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: $color-text-muted;
+}
+
+.employees-table__td {
+  padding: $spacing-sm;
+  font-size: 0.95rem;
+  color: $color-text;
+  border-bottom: 1px solid rgba($color-surface-hover, 0.6);
+}
+
+.employees-table__row {
+  &:hover .employees-table__td {
+    background-color: $color-surface-hover;
+  }
+}
