@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { getAllEmployees } from '../../../Api/employees-list.api';
+import { RiResetLeftFill } from "react-icons/ri";
+import { FaPlus } from "react-icons/fa6";
+import NewEmployeeModal from '../../Blocks/Modal/newEmployee';
 
 const initialSearchFilters = {
     fullName: '',
@@ -30,9 +33,20 @@ const formatISODate = (dateOfBirth) => {
     return dateOnly|| '';
 };
 
+const normalizeEmployees = (employeesData) =>
+    employeesData.map((employee, index) => ({
+        id: employee.empId || index + 1,
+        fullName: employee.empName || '',
+        dateOfBirth: employee.empDateOfBirth || '',
+        hometown: employee.empHometown || '',
+        militaryRank: employee.empMilitaryRank || '',
+        position: employee.empPosition || '',
+    }));
+
 const EmployeesList = () => {
     const [searchFilters, setSearchFilters] = useState(initialSearchFilters);
     const [employees, setEmployees] = useState([]);
+    const [isNewEmployeeModalOpen, setIsNewEmployeeModalOpen] = useState(false);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -43,32 +57,21 @@ const EmployeesList = () => {
     };
 
     const handleCreateNewEmployees = () => {
-        alert('New Employees');
+        setIsNewEmployeeModalOpen(true);
+    };
+
+    const fetchEmployees = async () => {
+        try {
+            const response = await getAllEmployees();
+            const employeesData = response.data ? response.data : [];
+            setEmployees(normalizeEmployees(employeesData));
+        } catch (error) {
+            console.error('Failed to fetch employees list:', error);
+            setEmployees([]);
+        }
     };
 
     useEffect(() => {
-        const fetchEmployees = async () => {
-            try {
-                const response = await getAllEmployees();
-                const employeesData = response.data ? response.data : [];
-                console.log(employeesData);
-                const normalizedEmployees = employeesData.map((employee, index) => ({
-                    id: employee.empId || index + 1,
-                    fullName: employee.empName || '',
-                    dateOfBirth: employee.empDateOfBirth || '',
-                    hometown: employee.empHometown || '',
-                    militaryRank: employee.empMilitaryRank || '',
-                    position: employee.empPosition || '',
-                }));
-                
-
-                setEmployees(normalizedEmployees);
-            } catch (error) {
-                console.error('Failed to fetch employees list:', error);
-                setEmployees([]);
-            }
-        };
-
         fetchEmployees();
     }, []);
 
@@ -100,6 +103,7 @@ const EmployeesList = () => {
                     className='employees-list__header-button'
                     type='button'
                     onClick={handleCreateNewEmployees}>
+                    <FaPlus/>
                     New Employee
                 </button>
             </div>
@@ -188,14 +192,12 @@ const EmployeesList = () => {
                 </div>
 
                 <div className="employees-search__actions">
-                    <button type="submit" className="employees-search__button employees-search__button--primary">
-                        Search
-                    </button>
                     <button
                         type="button"
-                        className="employees-search__button employees-search__button--secondary"
+                        className="employees-search__button"
                         onClick={handleReset}
-                    >
+                    >   
+                        <RiResetLeftFill/>
                         Reset
                     </button>
                 </div>
@@ -209,8 +211,9 @@ const EmployeesList = () => {
                             <th className="employees-table__th">Full Name</th>
                             <th className="employees-table__th">Date of Birth</th>
                             <th className="employees-table__th">Age</th>
+                            <th className="employees-table__th">Hometown</th>
                             <th className="employees-table__th">Military Rank</th>
-                            <th className="employees-table__th">Postion</th>
+                            <th className="employees-table__th">Position</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -221,13 +224,14 @@ const EmployeesList = () => {
                                     <td className="employees-table__td">{employee.fullName}</td>
                                     <td className="employees-table__td">{formatISODate(employee.dateOfBirth)}</td>
                                     <td className="employees-table__td">{calculateAge(employee.dateOfBirth)}</td>
+                                    <td className="employees-table__td">{employee.hometown}</td>
                                     <td className="employees-table__td">{employee.militaryRank}</td>
                                     <td className="employees-table__td">{employee.position}</td>
                                 </tr>
                             ))
                         ) : (
                             <tr className="employees-table__row">
-                                <td className="employees-table__td" colSpan="6">
+                                <td className="employees-table__td" colSpan="7">
                                     No employees found.
                                 </td>
                             </tr>
@@ -235,6 +239,12 @@ const EmployeesList = () => {
                     </tbody>
                 </table>
             </div>
+
+            <NewEmployeeModal
+                isOpen={isNewEmployeeModalOpen}
+                onClose={() => setIsNewEmployeeModalOpen(false)}
+                onEmployeeCreated={fetchEmployees}
+            />
         </div>
     );
 };

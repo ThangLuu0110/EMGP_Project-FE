@@ -16,6 +16,25 @@ const getAllEmployees = () => {
     });
 };
 
+const createEmployee = (employeeData) => {
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: JSON.stringify(employeeData),
+    };
+
+    return fetch('/api/v1/employees/create', options).then((response) => {
+        if (!response.ok) {
+            throw new Error(`Failed to create employee: ${response.status}`);
+        }
+
+        return response.json();
+    });
+};
+
 export {
-    getAllEmployees
+    getAllEmployees,
+    createEmployee,
 };
