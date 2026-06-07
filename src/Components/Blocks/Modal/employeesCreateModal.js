@@ -10,7 +10,7 @@ const initialFormData = {
     position: '',
 };
 
-const NewEmployeeModal = ({ isOpen, onClose, onEmployeeCreated }) => {
+const EmployeeCreateModal = ({ isOpen, onClose, onEmployeeCreated }) => {
     const [formData, setFormData] = useState(initialFormData);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState('');
@@ -187,4 +187,4 @@ const NewEmployeeModal = ({ isOpen, onClose, onEmployeeCreated }) => {
     );
 };
 
-export default NewEmployeeModal;
+export default EmployeeCreateModal;
