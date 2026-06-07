@@ -14,9 +14,21 @@
       font-size: 1.5rem;
       font-weight: 600;
     }
+  }
+
+  &__footer {
+    margin-top: 1rem;
+    padding: $spacing-md;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background-color: $color-surface;
+    border-radius: 8px 8px 0 0;
+
 
     &-button {
-      width: 10rem;
+      height: 2.5rem;
       padding: $spacing-sm $spacing-md;
       font-size: 0.9rem;
       font-family: inherit;
@@ -25,10 +37,19 @@
       border-radius: 6px;
       cursor: pointer;
       color: $color-text;
-      background-color: $color-create-button;
       display: flex;
       align-items: center;
       justify-content: space-between;
+
+      &.delete{
+        width: 7rem;
+        background-color: $color-delete-button;
+      }
+
+      &.create{
+        width: 10rem;
+        background-color: $color-create-button;
+      }
 
       &:hover {
         filter: brightness(1.1);
@@ -49,7 +70,7 @@
 
     &.row-one{
       @include respond-to(md) {
-        grid-template-columns: 3fr 1fr;
+        grid-template-columns: 8.5fr 3fr 0.5fr;
       }
     }
 
@@ -123,7 +144,7 @@
 }
 
 .employees-table {
-  margin-top: $spacing-lg;
+  margin-top: $spacing-sm;
   background-color: $color-surface;
   border-radius: 8px;
   padding: $spacing-lg;
@@ -157,6 +178,56 @@
 .employees-table__row {
   &:hover .employees-table__td {
     background-color: $color-surface-hover;
+  }
+}
+
+.employees-table__pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-sm;
+  margin-top: $spacing-lg;
+  padding-top: $spacing-md;
+  border-top: 1px solid $color-surface-hover;
+}
+
+.employees-table__pagination-info {
+  margin: 0;
+  font-size: 0.875rem;
+  color: $color-text-muted;
+}
+
+.employees-table__pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+}
+
+.employees-table__pagination-page {
+  font-size: 0.875rem;
+  color: $color-text;
+}
+
+.employees-table__pagination-button {
+  padding: $spacing-sm $spacing-md;
+  font-size: 0.875rem;
+  font-family: inherit;
+  font-weight: 500;
+  color: $color-text;
+  background-color: $color-surface-hover;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  @include link-transition;
+
+  &:hover:not(:disabled) {
+    filter: brightness(1.1);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 }
 
